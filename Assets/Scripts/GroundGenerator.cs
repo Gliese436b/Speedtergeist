@@ -14,7 +14,7 @@ public class GroundGenerator : MonoBehaviour
 
         for (int i = 0; i < 2; i++)
         {
-            lastObject = Pooler.Instance.GetPooledObject(firstStartPos + Vector3.right * 32 * i);
+            lastObject = GroundPooler.Instance.GetPooledObject(firstStartPos + Vector3.right * 32 * i);
         }
 
         StartCoroutine(Generate());
@@ -28,7 +28,7 @@ public class GroundGenerator : MonoBehaviour
             {
                 startPos = lastObject.transform.position + Vector3.right * 32;
             }
-            GameObject obj = Pooler.Instance.GetPooledObject(startPos);
+            GameObject obj = GroundPooler.Instance.GetPooledObject(startPos);
             lastObject = obj;
             yield return new WaitForSeconds(moveTime);
         }

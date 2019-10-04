@@ -268,6 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
+  disablePosX: -40
 --- !u!1 &3862136204780456014
 GameObject:
   m_ObjectHideFlags: 0

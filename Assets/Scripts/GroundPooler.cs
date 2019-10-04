@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Pooler : MonoBehaviour
+public class GroundPooler : MonoBehaviour
 {
-    public static Pooler Instance;
+    public static GroundPooler Instance;
     public GameObject prefab;
     public HideFlags flag = HideFlags.HideInHierarchy;
     private List<GameObject> pooledObjects = new List<GameObject>();
@@ -24,6 +24,7 @@ public class Pooler : MonoBehaviour
         {
             if (!pooledObjects[i].activeInHierarchy)
             {
+                pooledObjects[i].transform.position = Position;
                 pooledObjects[i].SetActive(true);
                 return pooledObjects[i];
             }

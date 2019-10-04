@@ -1,11 +1,15 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public delegate void FPlayerEnable(PlayerController Player);
+    public static event FPlayerEnable OnPlaying;
+
     // Components
     private SpriteRenderer sr;
+    public Color playerColor;
+    public Color waitColor;
 
     // Bools
     public bool isMoving;
@@ -21,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        
+        OnPlaying?.Invoke(this);
     }
 
     private void Awake()
@@ -37,6 +41,11 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         PlayerInput();
+    }
+
+    public void PossessEnemy(EnemyBase Enemy)
+    {
+        sr.sprite = Enemy.sr.sprite;
     }
 
     public void PlayerInput()
@@ -65,7 +74,7 @@ public class PlayerController : MonoBehaviour
             railIndex--;
             railIndex = Mathf.Clamp(railIndex, 0, 2);
             StartCoroutine(MoveRoutine(railIndex));
-        }        
+        }
     }
 
     public IEnumerator MoveRoutine(int Index)
@@ -84,4 +93,16 @@ public class PlayerController : MonoBehaviour
 
         isMoving = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            print("Collided with enemy " + collision.name);
+            collision.GetComponent<EnemyBase>().SetNewBehaviour(EBehaviourType.POSSESSED);
+            
+
+        }
+    }
+
 }
