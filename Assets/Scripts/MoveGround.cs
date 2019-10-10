@@ -11,7 +11,7 @@ public class MoveGround : MonoBehaviour
     }
 
     private void Move()
-    {
+    {        
         transform.position += Vector3.left * speed * Time.fixedDeltaTime;
     }
 

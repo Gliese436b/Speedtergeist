@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1079802885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1079802886}
+  m_Layer: 0
+  m_Name: WaitSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1079802886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079802885}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3950145654739830945}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1796955091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1796955092}
+  m_Layer: 0
+  m_Name: EnemySlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1796955092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796955091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3950145654739830945}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3950145653391110697
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,12 +71,12 @@ GameObject:
   - component: {fileID: 3950145653391110698}
   - component: {fileID: 3950145653391110699}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: SpriteParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3950145653391110698
 Transform:
   m_ObjectHideFlags: 0
@@ -110,6 +170,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3950145653391110698}
+  - {fileID: 1796955092}
+  - {fileID: 1079802886}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -125,14 +187,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c8d56c05401c14fa18a9a9ef4e22b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerColor: {r: 0.10980392, g: 0.90588236, b: 0.79607844, a: 0.8392157}
+  waitColor: {r: 0.21493416, g: 0.6603774, b: 0.5952541, a: 0.29411766}
+  currentMonster: {fileID: 0}
+  savedMonster: {fileID: 0}
+  enemyParent: {fileID: 1796955092}
+  waitParent: {fileID: 1079802886}
   isMoving: 0
+  isUsingAbility: 0
   vertDistanceToMove: 1.25
   moveSpeedMultiplier: 7
   railIndex: 1
   rails:
-  - {x: 0, y: -1.25, z: 0}
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 1.25, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!50 &3950145654739830956
 Rigidbody2D:
   serializedVersion: 4

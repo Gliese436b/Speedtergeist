@@ -1,36 +1,30 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundPooler : MonoBehaviour
+public class GroundPooler : Singleton<GroundPooler>
 {
-    public static GroundPooler Instance;
-    public GameObject prefab;
+    public MoveGround prefab;
     public HideFlags flag = HideFlags.HideInHierarchy;
-    private List<GameObject> pooledObjects = new List<GameObject>();
+    private List<MoveGround> pooledObjects = new List<MoveGround>();
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    public GameObject GetPooledObject()
+    public MoveGround GetPooledObject()
     {
         return GetPooledObject(transform.position);
     }
 
-    public GameObject GetPooledObject(Vector3 Position)
+    public MoveGround GetPooledObject(Vector3 Position)
     {
         for (int i = 0; i < pooledObjects.Count; i++)
         {
-            if (!pooledObjects[i].activeInHierarchy)
+            if (!pooledObjects[i].gameObject.activeInHierarchy)
             {
                 pooledObjects[i].transform.position = Position;
-                pooledObjects[i].SetActive(true);
+                pooledObjects[i].gameObject.SetActive(true);
                 return pooledObjects[i];
             }
         }
 
-        GameObject tmpObj = Instantiate(prefab, Position, Quaternion.identity);
+        MoveGround tmpObj = Instantiate(prefab, Position, Quaternion.identity);
         tmpObj.hideFlags = flag;
         pooledObjects.Add(tmpObj);        
         return tmpObj;
