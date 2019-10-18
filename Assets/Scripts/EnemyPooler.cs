@@ -5,7 +5,7 @@ using System.Linq;
 
 public class EnemyPooler : Singleton<EnemyPooler>
 {
-    public MonsterBase prefab;
+    public List<MonsterBase> prefab = new List<MonsterBase>();
     public HideFlags flag = HideFlags.HideInHierarchy;
     private List<MonsterBase> pooledObjects = new List<MonsterBase>();
 
@@ -22,17 +22,18 @@ public class EnemyPooler : Singleton<EnemyPooler>
             {
                 pooledObjects[i].transform.position = Position;
                 pooledObjects[i].gameObject.SetActive(true);
+                pooledObjects[i].behaviourType = EBehaviourType.NORMAL;
                 // In the cast number inside the parameter of Random.Range, + 1 is added since Linq.Max returns 1 less than the actual amount of entries.
-                pooledObjects[i].monsterType = (EMonsterType)Random.Range(1, (int)System.Enum.GetValues(typeof(EMonsterType)).Cast<EMonsterType>().Max() + 1);
-                pooledObjects[i].SetUpMonster(pooledObjects[i].monsterType);
+                //pooledObjects[i].monsterType = (EMonsterType)Random.Range(1, (int)System.Enum.GetValues(typeof(EMonsterType)).Cast<EMonsterType>().Max() + 1);
+                //pooledObjects[i].SetUpMonster(pooledObjects[i].monsterType);
                 return pooledObjects[i];
             }
         }
 
-        MonsterBase tmpObj = Instantiate(prefab, Position, Quaternion.identity);
-        var aux = (EMonsterType)Random.Range(1, (int)System.Enum.GetValues(typeof(EMonsterType)).Cast<EMonsterType>().Max());
-        tmpObj.monsterType = aux;
-        tmpObj.SetUpMonster(aux);
+        MonsterBase tmpObj = Instantiate(prefab[Random.Range(0, prefab.Count)], Position, Quaternion.identity);
+        //var aux = (EMonsterType)Random.Range(1, (int)System.Enum.GetValues(typeof(EMonsterType)).Cast<EMonsterType>().Max());
+        //tmpObj.monsterType = aux;
+        //tmpObj.SetUpMonster(aux);
         tmpObj.hideFlags = flag;
         pooledObjects.Add(tmpObj);
         return tmpObj;

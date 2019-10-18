@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Speeder : MonsterBase
+public class Banshee : MonsterBase
 {
-
+    
 }

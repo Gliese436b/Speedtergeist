@@ -1,79 +1,73 @@
-﻿using UnityEngine;
-
-/// <summary>
-/// Types of monsters.
-/// </summary>
-public enum EMonsterType { GHOST, DEMON, ZOMBIE, BANSHEE }
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public enum EBehaviourType { NORMAL, POSSESSED, WAITING }
 
-public class MonsterBase : MonoBehaviour
+public class MonsterBase:MonoBehaviour
 {
+    // Bools
+    public bool isUsingAbility;
+
     // Numbers
     public float movementSpeed = 2f;
-    public float disablePosX = -20;
+    public float disablePosX = -20;   
 
     // Components
     public SpriteRenderer sr;
+    public Sprite monsterSprite;
     private PlayerController player;
     public Color enemyColor;
 
     // Others
     public EBehaviourType behaviourType;
-    public EMonsterType monsterType;
+    //public EMonsterType monsterType;
 
-    private void Awake()
+    public virtual void Awake()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
     }
 
-    private void Update()
+    public virtual void Start()
+    {
+        sr.sprite = monsterSprite;
+    }
+
+    public virtual void Update()
     {
         SwitchState();
         DisableObject();
+        PlayerInput();
+    }
+
+    private void PlayerInput()
+    {        
+        if (Input.GetButton("Fire1"))
+        {
+            isUsingAbility = true;
+        }
+        else isUsingAbility = false;
+    }
+
+    public void MonsterAbility()
+    {
+        
     }
 
     private void OnEnable()
     {
-        SetUpMonster(monsterType);
+        //SetUpMonster(monsterType);
         PlayerController.OnPlaying += PlayerController_OnPlaying;
     }
 
-    public void SetUpMonster(EMonsterType Monster)
-    {
-        if (Monster == EMonsterType.GHOST)
-        {
-            sr.sprite = Resources.Load<Sprite>("Sprites/[PH]Ghost");
-        }
-
-        if (Monster == EMonsterType.DEMON)
-        {
-            sr.sprite = Resources.Load<Sprite>("Sprites/[PH]Demon");
-        }
-
-        if (Monster == EMonsterType.ZOMBIE)
-        {
-            sr.sprite = Resources.Load<Sprite>("Sprites/[PH]Zombie");
-        }
-
-        if (Monster == EMonsterType.BANSHEE)
-        {
-            sr.sprite = Resources.Load<Sprite>("Sprites/[PH]Banshee");
-        }
-    }
-
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         PlayerController.OnPlaying -= PlayerController_OnPlaying;
     }
 
-    private void PlayerController_OnPlaying(PlayerController Player)
+    public virtual void PlayerController_OnPlaying(PlayerController Player)
     {
         player = Player;
-    }
-
-    void FixedUpdate()
-    {
     }
 
     public virtual void PossessedBehaviour()
@@ -95,12 +89,12 @@ public class MonsterBase : MonoBehaviour
             sr.flipX = false;
     }
 
-    public void SetNewBehaviour(EBehaviourType NewBehaviour)
+    public virtual void SetNewBehaviour(EBehaviourType NewBehaviour)
     {
         behaviourType = NewBehaviour;
     }
 
-    public void SwitchState()
+    public virtual void SwitchState()
     {
         switch (behaviourType)
         {
@@ -118,7 +112,8 @@ public class MonsterBase : MonoBehaviour
         }
     }
 
-    public void DisableObject()
+
+    public virtual void DisableObject()
     {
         if (transform.position.x < disablePosX)
         {

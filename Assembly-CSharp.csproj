@@ -62,9 +62,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemy\Banshee.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Demon.cs" />
     <Compile Include="Assets\Scripts\Enemy\Ghost.cs" />
     <Compile Include="Assets\Scripts\Enemy\MonsterBase.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Speeder.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Zombie.cs" />
     <Compile Include="Assets\Scripts\EnemyGenerator.cs" />
     <Compile Include="Assets\Scripts\EnemyPooler.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
